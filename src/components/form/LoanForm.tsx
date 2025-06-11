@@ -49,61 +49,100 @@ export default function LoanForm() {
   };
 
   return (
-    <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center" style={{ background: 'rgba(255, 255, 255, 0.85)' }}>
-      <div className="bg-white p-4 p-md-5 rounded shadow w-100" style={{ maxWidth: '700px' }}>
-        <h2 className="mb-4 fw-bold text-center">
-          Formulaire de comparaison de taux pour des crédits à la consommation
+    <div
+      className="container-fluid min-vh-100 d-flex align-items-center justify-content-center"
+      style={{
+        background: 'linear-gradient(135deg, #4e73df, #224abe)',
+      }}
+    >
+      <div
+        className="bg-white p-4 p-md-5 rounded-3 shadow-lg w-100"
+        style={{
+          maxWidth: '700px',
+          transition: 'transform 0.3s ease',
+        }}
+      >
+        <h2 className="mb-4 fw-bold text-center text-primary">
+          Comparaison de taux pour crédits à la consommation
         </h2>
 
         <form onSubmit={handleSubmit}>
-          <fieldset className="border p-3">
-            <legend className="w-auto px-2">Informations</legend>
+          <fieldset className="border p-4 rounded-2">
+            <legend className="w-auto px-3 fs-5 fw-semibold text-primary"></legend>
 
             {FORM_FIELDS.map((field: FormField) => (
-              <div className="row mb-3" key={field.name}>
-                <label htmlFor={field.name} className="col-sm-4 col-form-label">
-                  {field.label}
-                </label>
-                <div className="col-sm-8">
-                  {field.type === 'select' ? (
-                    <select
-                      id={field.name}
-                      name={field.name}
-                      value={form[field.name]}
-                      onChange={handleChange}
-                      required
-                      className="form-select"
-                    >
-                      <option value="">-- Choisir --</option>
-                      {field.options?.map((opt) => (
-                        <option key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <input
-                      type={field.type}
-                      id={field.name}
-                      name={field.name}
-                      value={form[field.name]}
-                      onChange={handleChange}
-                      required
-                      className="form-control"
-                    />
-                  )}
+              <div className="row mb-4" key={field.name}>
+                <div className="col-12">
+                  <div className="form-floating">
+                    {field.type === 'select' ? (
+                      <select
+                        id={field.name}
+                        name={field.name}
+                        value={form[field.name]}
+                        onChange={handleChange}
+                        required
+                        className="form-select"
+                        style={{
+                          height: '3.5rem',
+                          paddingTop: '1.5rem',
+                          paddingBottom: '0.75rem',
+                        }}
+                      >
+                        <option value="">-- Choisir --</option>
+                        {field.options?.map((opt) => (
+                          <option key={opt.value} value={opt.value}>
+                            {opt.label}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <input
+                        type={field.type}
+                        id={field.name}
+                        name={field.name}
+                        value={form[field.name]}
+                        onChange={handleChange}
+                        required
+                        className="form-control"
+                        style={{
+                          height: '3.5rem',
+                          paddingTop: '1.5rem',
+                          paddingBottom: '0.75rem',
+                        }}
+                        placeholder=" " // 👈 placeholder must not be empty
+                      />
+                    )}
+                    <label htmlFor={field.name} className="form-label text-primary">
+                      {field.label}
+                    </label>
+                  </div>
                 </div>
               </div>
             ))}
 
-            <div className="text-center">
-              <button type="submit" className="btn btn-primary btn-lg w-100">
+            <div className="text-center mt-4">
+              <button
+                type="submit"
+                className="btn btn-primary btn-lg w-100"
+                style={{
+                  background: 'linear-gradient(90deg, #4e73df, #224abe)',
+                  border: 'none',
+                  borderRadius: '0.5rem',
+                  padding: '0.75rem',
+                  transition: 'all 0.3s ease',
+                }}
+              >
                 Rechercher
               </button>
             </div>
 
             {error && (
-              <div className="mt-3 text-danger text-center">{error}</div>
+              <div
+                className="mt-3 text-center p-3 rounded"
+                style={{ background: 'rgba(220, 53, 69, 0.1)', color: '#dc3545' }}
+              >
+                {error}
+              </div>
             )}
           </fieldset>
         </form>
@@ -112,6 +151,48 @@ export default function LoanForm() {
           <OfferList offers={offers} />
         </div>
       </div>
+
+      <style jsx>{`
+        .form-container:hover {
+          transform: translateY(-5px);
+        }
+        .form-floating > .form-control:focus ~ label,
+        .form-floating > .form-control:not(:placeholder-shown) ~ label,
+        .form-floating > .form-select ~ label {
+          transform: scale(0.85) translateY(-1.5rem) translateX(0.15rem);
+          background: white;
+          padding: 0 0.5rem;
+          color: #4e73df;
+          opacity: 1;
+        }
+        .form-floating > .form-control,
+        .form-floating > .form-select {
+          border-color: #ced4da;
+          border-radius: 0.5rem;
+        }
+        .form-floating > label {
+          transition: all 0.2s ease;
+          transform-origin: top left;
+          color: #6c757d;
+        }
+        .form-floating > .form-control:focus,
+        .form-floating > .form-select:focus {
+          border-color: #4e73df;
+          box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+        }
+        .btn-primary:hover {
+          background: linear-gradient(90deg, #224abe, #1a3a9e);
+          transform: translateY(-2px);
+        }
+        @media (max-width: 576px) {
+          .p-4 {
+            padding: 1.5rem !important;
+          }
+          h2 {
+            font-size: 1.5rem;
+          }
+        }
+      `}</style>
     </div>
   );
 }
