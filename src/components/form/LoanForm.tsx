@@ -109,7 +109,7 @@ export default function LoanForm() {
                           paddingTop: '1.5rem',
                           paddingBottom: '0.75rem',
                         }}
-                        placeholder=" " // 👈 placeholder must not be empty
+                        placeholder=" "
                       />
                     )}
                     <label htmlFor={field.name} className="form-label text-primary">
